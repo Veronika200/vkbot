@@ -2,6 +2,7 @@ from config import *
 ###import vk
 import vk_api
 import requests
+import random
 
 
 def write_msg(user_id, text):
