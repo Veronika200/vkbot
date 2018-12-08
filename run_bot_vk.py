@@ -29,7 +29,7 @@ while True:
         print(update)
         user_id = update[0][3]
         user_name = vk_bot.method('users.get', {'user_ids': user_id})
-        write_msg(user_id, 'Privet, ' + (user_name[0]['first_name']))  # message to user
+        write_msg(user_id, 'Привет, ' + (user_name[0]['first_name']))  # message to user
 
         print(str(user_name[0]['first_name']) + ' ' +
               str(user_name[0]['last_name']) + ' has written to bot - ' +
