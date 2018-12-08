@@ -3,11 +3,6 @@ from config import *
 import vk_api
 import requests
 
-# session = vk.Session(access_token='tocken')
-# vk_api = vk.API(session)
-### vk_api.users.get(user_id=1)
-# vk_api.users.get(user_id=302936381)
-
 def write_msg(user_id, text):
      vk_bot.method('messages.send', {'user_id': user_id, 'message': text})
 
