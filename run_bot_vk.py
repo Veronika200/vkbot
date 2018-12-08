@@ -16,6 +16,13 @@ print(str(long_poll))
 
 # https://{$server}?act=a_check&key={$key}&ts={$ts}&wait=2500&mode=2&version=2
 
+def write_msg_attach(user_id, text, att_url):
+    vk_bot.method('messages.send',
+                  {'user_id': user_id,
+                   'attachment': att_url,
+                   'message': text,
+                   'random': random.randint(0, 1000)})
+
 while True:
     long_poll = requests.get(
         'https://{server}?act={act}&key={key}&ts={ts}&wait=2500'.format(server=server, act='a_check', key=key,
@@ -26,7 +33,12 @@ while True:
         print(update)
         user_id = update[0][3]
         user_name = vk_bot.method('users.get', {'user_ids': user_id})
-        write_msg(user_id, 'Привет, ' + (user_name[0]['first_name']))  # message to user
+        if 'картинк' in update[0][6]:
+            write_msg_attach(user_id,
+                             'вот тебе огненная картинка',
+                             'photo-171720905_456239025')
+        else:
+            write_msg(user_id, 'Привет, ' + (user_name[0]['first_name']))  # message to user
 
         print(str(user_name[0]['first_name']) + ' ' +
               str(user_name[0]['last_name']) + ' has written to bot - ' +
