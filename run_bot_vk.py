@@ -48,6 +48,11 @@ while True:
         print(update)
         user_id = update[0][3]
         user_name = vk_bot.method('users.get', {'user_ids': user_id})
+		if 'красив' in update[0][6]: # search for 'красив'
+			group_id = -35684707 # group id always starts from minus
+			post_id = get_last_post(group_id, 1, 1, 'owner')
+			attach = 'wall' + str(group_id) + ' ' + str(post_id) # make link to post
+			write_msg_attach(user_id, 'вот тебе красота', attach)
         if 'картинк' in update[0][6]:
             write_msg_attach(user_id,
                              'вот тебе огненная картинка',
