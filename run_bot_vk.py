@@ -15,6 +15,16 @@ vk_bot_user = vk_api.VkApi(token=ACCOUNT_TOKEN) # wall.get for user only
 print("Ready to work")
 print(str(long_poll))
 
+url_trans = 'https://translate.yandex.net/api/v1.5/tr.json/translate'
+
+def YaTrans(in_text, lang):
+    trans_option = {'key':YA_KEY, 'lang':lang, 'text': in_text}
+    webRequest = requests.get(url_trans, params = trans_option)
+    out_text = webRequest.text
+    out_text = out_text[36:(len(out_text)-3)]
+    print(out_text)
+    return out_text
+	
 
 def write_msg(user_id, text):
     vk_bot.method('messages.send', {'user_id': user_id, 'message': text, 'random_id': random.randint(0, 1000)})
@@ -54,7 +64,20 @@ while True:
             write_msg(user_id, 'Привет, ' + (user_name[0]['first_name']) + ', что задано по математике?')
         elif 'Сергей' in (user_name[0]['first_name']):
             sprosit_zadanie('физике')
-        if 'красив' in update[0][6]: # search for 'красив'
+        elif 'Иван' in (user_name[0]['first_name']):
+            sprosit_zadanie('химии')
+
+        if 'en:' in update[0][6]:
+            na_perevod = str(update[0][6])
+            na_perevod = na_perevod[3:(len(na_perevod))]
+            perevod = YaTrans(na_perevod, 'en-ru')
+            write_msg(user_id, perevod)  # message to user
+        elif 'ru:' in update[0][6]:
+            na_perevod = str(update[0][6])
+            na_perevod = na_perevod[3:(len(na_perevod))]
+            perevod = YaTrans(na_perevod, 'ru-en')
+            write_msg(user_id, perevod)  # message to user
+        elif 'красив' in update[0][6]: # search for 'красив'
             group_id = -35684707 # group id always starts from minus
             post_id = get_last_post(group_id, 1, 1, 'owner')
             attach = 'wall' + str(group_id) + ' ' + str(post_id) # make link to post
