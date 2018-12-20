@@ -1,17 +1,9 @@
 from config import *
-###import vk
 
 import vk_api
 import requests
 import random
 
-
-def write_msg(user_id, text):
-    vk_bot.method('messages.send', {'user_id': user_id, 'message': text, 'random_id': random.randint(0, 1000)})
-
-
-def sprosit_zadanie(urok):
-    write_msg(user_id, 'Привет, ' + (user_name[0]['first_name']) + ', что задано по ' + urok)
 
 vk_bot = vk_api.VkApi(token=TOKEN)
 long_poll = vk_bot.method('messages.getLongPollServer', {'need_pts': 1, 'lp_version': 3})
@@ -24,7 +16,13 @@ print("Ready to work")
 print(str(long_poll))
 
 
-# https://{$server}?act=a_check&key={$key}&ts={$ts}&wait=2500&mode=2&version=2
+def write_msg(user_id, text):
+    vk_bot.method('messages.send', {'user_id': user_id, 'message': text, 'random_id': random.randint(0, 1000)})
+
+
+def sprosit_zadanie(urok):
+    write_msg(user_id, 'Привет, ' + (user_name[0]['first_name']) + ', что задано по ' + urok)
+
 
 def write_msg_attach(user_id, text, att_url):
     vk_bot.method('messages.send',
